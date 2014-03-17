@@ -41,7 +41,7 @@ post '/add' => sub {
   my $user = params->{user};
   try {
     if ( is_member($config, $user) ) {
-      template 'generic', { content => "$user is already a member!" };
+      template 'generic', { message => "$user is already a member!" };
     } else {
       my $email = get_user_email($config, $user);
       open my $fh, '<', '/dev/urandom';
@@ -49,11 +49,11 @@ post '/add' => sub {
       my $key = unpack("h*", $bkey);
       $akeys->{$user} = [ $key, time ];
       email($email, 'add', $user, $key);
-      template 'generic', { content => "check $email for activation url" };
+      template 'generic', { message => "check $email for activation url" };
     }
   } catch {
     status 404;
-    template 'generic', { content => "$user does not exist on github: $_" };
+    template 'generic', { message => "$user does not exist on github: $_" };
   };
 };
 
@@ -67,9 +67,9 @@ post '/delete' => sub {
       my $key = unpack("h*", $bkey);
       $dkeys->{$user} = [ $key, time ];
       email($email, 'delete', $user, $key);
-      template 'generic', { content => "check $email for deactivation url" };
+      template 'generic', { message => "check $email for deactivation url" };
     } else {
-      template 'generic', { content => "$user is not a member!" };
+      template 'generic', { message => "$user is not a member!" };
     }
   } catch {
     status 500;
@@ -94,7 +94,7 @@ get '/add/:user/:key' => sub {
       status 403;
       return "auth key invalid for $user";
     }
-    template 'generic', { content => "$user added to tpm" } if add_member($config, $user);
+    template 'generic', { message => "$user added to tpm" } if add_member($config, $user);
   } catch {
     status 500;
     return 'unknown error';
@@ -118,7 +118,7 @@ get '/delete/:user/:key' => sub {
       status 403;
       return "auth key invalid for $user";
     }
-    template 'generic', { content => "$user deleted from tpm" } if delete_member($config, $user);
+    template 'generic', { message => "$user deleted from tpm" } if delete_member($config, $user);
   } catch {
     status 500;
     return 'unknown error';

@@ -1,3 +1,5 @@
-<div>
-  <% content %>
+<div class="container">
+  <div class="starter-template">
+    <h3><% message %></h3>
+  </div>
 </div>

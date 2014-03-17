@@ -1,6 +1,9 @@
-<div>
-  <form action="/delete" method="post">
-    <input type="text" name="user">github username<br>
-    <input type="submit" value="delete">
-  </form>
+<div class="container">
+  <div class="starter-template">
+    <h1>bye bye :(</h1>
+    <form action="/delete" method="post">
+      github username <input type="text" name="user">
+      <input type="submit" value="delete">
+    </form>
+  </div>
 </div>

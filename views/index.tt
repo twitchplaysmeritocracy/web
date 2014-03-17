@@ -1,6 +1,8 @@
 
-<div>
-  twitch plays meritocracy!<br>
-  click here to add: <a href="<% request.uri_base %>/add"><% request.uri_base %>/add</a><br>
-  click here to delete: <a href="<% request.uri_base %>/delete"><% request.uri_base %>/delete</a><br>
+<div class="container">
+  <div class="starter-template">
+    <h1>twitch plays meritocracy!</h1>
+    <p>click here to add: <a href="<% request.uri_base %>/add"><% request.uri_base %>/add</a></p>
+    <p>click here to delete: <a href="<% request.uri_base %>/delete"><% request.uri_base %>/delete</a></p>
+  </div>
 </div>

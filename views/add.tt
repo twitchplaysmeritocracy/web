@@ -1,6 +1,9 @@
-<div>
-  <form action="/add" method="post">
-    <input type="text" name="user">github username<br>
-    <input type="submit" value="add">
-  </form>
+<div class="container">
+  <div class="starter-template">
+    <h1>u can haz moar merits!</h1>
+    <form action="/add" method="post">
+      github username <input type="text" name="user">
+      <input type="submit" value="add">
+    </form>
+  </div>
 </div>
