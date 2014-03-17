@@ -44,6 +44,7 @@ post '/add' => sub {
       template 'generic', { message => "$user is already a member!" };
     } else {
       my $email = get_user_email($config, $user);
+      debug "email is $email";
       open my $fh, '<', '/dev/urandom';
       read $fh, my $bkey, 32;
       my $key = unpack("h*", $bkey);
@@ -225,7 +226,9 @@ sub get_user_email {
   $request->authorization_basic($config->{token}, 'x-oauth-basic');
   my $response = $ua->request($request);
   if ($response->code == 200) {
-    return JSON->new->decode($response->decoded_content)->{email};
+    my $email = JSON->new->decode($response->decoded_content)->{email};
+    die "email/user not found\n" unless defined $email;
+    return $email;
   } else {
     die $response->status_line . "\n";
   }
