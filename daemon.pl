@@ -16,15 +16,14 @@ Daemon::Control->new(
         path      => abs_path($0),
  
         program      => '/home/ashley/perl5/perlbrew/perls/perl-5.12.4/bin/starman',
-        program_args => [ '--workers', '3', '/home/ashley/git/TPM-Access/bin/app.pl',
-],
+        program_args => [ '--workers', '3', '/home/ashley/git/TPM-Access/bin/app.pl' ],
  
         user  => 'starman',
         group => 'starman',
  
-        pid_file    => '/tmp/starman.pid',
-        stderr_file => '/tmp/starman.err',
-        stdout_file => '/tmp/starman.out',
+        pid_file    => '/tmp/tpm-access.pid',
+        stderr_file => '/tmp/tpm-access.err',
+        stdout_file => '/tmp/tpm-access.out',
  
         fork => 2,
  

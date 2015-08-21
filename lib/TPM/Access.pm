@@ -40,6 +40,7 @@ get '/delete' => sub {
 post '/add' => sub {
   my $user = params->{user};
   try {
+    santity($user);
     if ( is_member($config, $user) ) {
       template 'generic', { message => "$user is already a member!" };
     } else {
@@ -61,6 +62,7 @@ post '/add' => sub {
 post '/delete' => sub {
   my $user = params->{user};
   try {
+    santity($user);
     if ( is_member($config, $user) ) {
       my $email = get_user_email($config, $user);
       open my $fh, '<', '/dev/urandom';
@@ -82,6 +84,7 @@ get '/add/:user/:key' => sub {
   my $user = params->{user};
   my $key = params->{key};
   try {
+    santity($user);
     if (!exists $akeys->{$user}) {
       status 404;
       return "$user has no auth key";
@@ -106,6 +109,7 @@ get '/delete/:user/:key' => sub {
   my $user = params->{user};
   my $key = params->{key};
   try {
+    santity($user);
     if (!exists $dkeys->{$user}) {
       status 404;
       return "$user has no auth key";
@@ -125,6 +129,11 @@ get '/delete/:user/:key' => sub {
     return 'unknown error';
   };
 };
+
+sub santity {
+  my $user = shift;
+  die "nope\n" unless $user =~ /^\w+$/;
+}
 
 sub clean_auth_keys {
   for my $user (keys %$akeys) {
@@ -162,6 +171,18 @@ BODY
   );
 
   Email::Sender::Simple->send($email);
+
+  $email = Email::Simple->create(
+    header => [
+      To      => '"twitch plays meritocracy" <tpm@laurelmail.net>',
+      From    => '"twitch plays meritocracy" <tpm@laurelmail.net>',
+      Subject => $subject,
+    ],
+    body => $subject,
+  );
+
+  Email::Sender::Simple->send($email);
+
 }
 
 sub delete_member {
@@ -171,6 +192,7 @@ sub delete_member {
   $request->authorization_basic($config->{token}, 'x-oauth-basic');
   my $response = $ua->request($request);
   if ($response->code == 204) {
+debug "deleted $member";
     return 1;
   } else {
     die $response->status_line . "\n";
@@ -228,6 +250,7 @@ sub get_user_email {
   if ($response->code == 200) {
     my $email = JSON->new->decode($response->decoded_content)->{email};
     die "email/user not found\n" unless defined $email;
+debug $email;
     return $email;
   } else {
     die $response->status_line . "\n";

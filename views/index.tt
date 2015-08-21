@@ -4,5 +4,16 @@
     <h1>twitch plays meritocracy!</h1>
     <p>click here to add: <a href="<% request.uri_base %>/add"><% request.uri_base %>/add</a></p>
     <p>click here to delete: <a href="<% request.uri_base %>/delete"><% request.uri_base %>/delete</a></p>
+
+<p>
+inspired by:<br>
+<a href="http://www.ashedryden.com/blog/the-ethics-of-unpaid-labor-and-the-oss-community">http://www.ashedryden.com/blog/the-ethics-of-unpaid-labor-and-the-oss-community</a><br>
+<a href="https://blog.jcoglan.com/2013/11/15/why-github-is-not-your-cv/">https://blog.jcoglan.com/2013/11/15/why-github-is-not-your-cv/</a>
+</p>
+<p>
+but mostly:<br>
+<a href="https://github.com/sdboyer/dear_github_can_i_go_home_now">https://github.com/sdboyer/dear_github_can_i_go_home_now</a>
+</p>
+
   </div>
 </div>
